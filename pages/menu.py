@@ -1,5 +1,5 @@
 import streamlit as st
-
+from scripts.auth_utils import remove_cookies, set_cookies
 
 def show():
     st.markdown( #esconde sidebar
@@ -25,6 +25,7 @@ def show():
         if st.button('Sair', help='Sair do aplicativo', width='stretch'):
             st.session_state.logged_in = False
             st.session_state.page = 'login'
+            remove_cookies()
             st.rerun()
 
     st.subheader('Início')
@@ -48,6 +49,7 @@ def show():
                     unsafe_allow_html=True
                 )
             if st.button('Acessar', width='stretch', key='button_collection'):
+                set_cookies('page', 'collection')
                 st.session_state.page = 'collection'
                 st.rerun()
     with col2:
@@ -67,5 +69,6 @@ def show():
                     unsafe_allow_html=True
                 )
             if st.button('Acessar', width='stretch', key='button_stats'):
+                set_cookies('page', 'stats')
                 st.session_state.page = 'stats'
                 st.rerun()

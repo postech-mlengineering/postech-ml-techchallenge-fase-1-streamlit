@@ -8,7 +8,7 @@ from scripts.books_utils import (
     get_top_rated
 )
 from scripts.categories_utils import get_all_categories
-
+from scripts.auth_utils import get_cookies, set_cookies
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +17,8 @@ def show() -> None:
     '''
     Renderiza a página do catálogo.
     '''
+    set_cookies('page', 'collection')
+    st.session_state.token_acesso = get_cookies('token_acesso')
     #inicializa o catálogo no estado da sessão caso ele ainda não exista
     #busca os 10 livros mais bem avaliados por padrão
     if 'books_collection' not in st.session_state:
@@ -109,6 +111,7 @@ def show() -> None:
     with col2:
         if st.button('←', help='Voltar ao Menu', width='stretch'):
             logger.info('Usuário retornou ao menu.')
+            set_cookies('page', 'menu')
             st.session_state.page = 'menu'
             st.rerun()
     st.markdown('---')

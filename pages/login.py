@@ -1,8 +1,18 @@
 import streamlit as st
-from scripts.auth_utils import login
+from scripts.auth_utils import login, get_all_cookies
 
+
+def set_session_state(token, usuario):
+    st.session_state.token_acesso = token
+    st.session_state.usuario = usuario
+    st.session_state.logged_in = True
+    st.session_state.page = 'menu'
 
 def show():
+    token, usuario, logged_in, page = get_all_cookies()
+    if logged_in:
+        set_session_state(token, usuario)
+        st.rerun()
     _, col2, _ = st.columns([.3, .4, .3])
     with col2:
         st.title('Books2Scrape')
@@ -18,10 +28,7 @@ def show():
             if entrar:
                 token, erro = login(usuario, senha)
                 if token:
-                    st.session_state.token_acesso = token
-                    st.session_state.usuario = usuario
-                    st.session_state.logged_in = True
-                    st.session_state.page = 'home'
+                    set_session_state(token, usuario)
                     st.rerun()
                 else:
                     st.error(erro)

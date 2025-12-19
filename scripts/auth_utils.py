@@ -2,9 +2,35 @@ import logging
 import requests
 from typing import Tuple, Optional, Any
 from . import URL_BASE
+from streamlit_cookies_controller import CookieController
 
 logger = logging.getLogger(__name__)
 
+controller = CookieController()
+
+def remove_cookies():
+    controller.remove('token_acesso')
+    controller.remove('username')
+    controller.remove('logged_in')
+    controller.remove('page')
+
+def get_all_cookies():
+    return controller.get('token_acesso'), \
+        controller.get('username'), \
+        controller.get('logged_in'), \
+        controller.get('page')
+
+def get_cookies(key):
+    return controller.get(key)
+
+def set_all_cookies(token, usuario, page):
+    set_cookies('token_acesso', token)
+    set_cookies('username', usuario)
+    set_cookies('page', page)
+    set_cookies('logged_in', True)
+
+def set_cookies(key, value):
+    controller.set(key, value)
 
 def login(usuario: str, senha: str) -> Tuple[Optional[str], Optional[str]]:
     '''
@@ -29,6 +55,7 @@ def login(usuario: str, senha: str) -> Tuple[Optional[str], Optional[str]]:
         
         if response.status_code == 200:
             token = response.json().get('access_token')
+            set_all_cookies(token, usuario, 'menu')
             return token, None
         try:
             erro_data = response.json()

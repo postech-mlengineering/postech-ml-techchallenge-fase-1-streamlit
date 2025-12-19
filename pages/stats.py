@@ -2,13 +2,17 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from scripts.stats_utils import get_stats_overview, get_stats_by_category
-
+from scripts.auth_utils import get_cookies, set_cookies
 
 def show() -> None:
+    set_cookies('page', 'stats')
+    st.session_state.token_acesso = get_cookies('token_acesso')
+
     st.title('Estatísticas')
     _, col2 = st.columns([0.9, 0.1])
     with col2:
         if st.button('←', help='Voltar ao Menu', width='stretch'):
+            set_cookies('page', 'menu')
             st.session_state.page = 'menu'
             st.rerun()
     st.markdown('---')

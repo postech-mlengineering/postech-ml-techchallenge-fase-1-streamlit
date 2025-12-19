@@ -1,6 +1,6 @@
 import streamlit as st
 from pages import login, register, menu
-
+from scripts.auth_utils import get_cookies
 
 PAGES_CONFIG = {
     'login': {
@@ -25,9 +25,13 @@ PAGES_CONFIG = {
     }
 }
 
-if 'logged_in' not in st.session_state:
+st.session_state.token_acesso = get_cookies('token_acesso')
+st.session_state.page = get_cookies('page')
+st.session_state.username = get_cookies('username')
+st.session_state.logged_in = get_cookies('logged_in')
+
+if 'logged_in' not in st.session_state and not st.session_state.logged_in:
     st.session_state.logged_in = False
-if 'page' not in st.session_state:
     st.session_state.page = 'login'
 
 current = PAGES_CONFIG.get(st.session_state.page, PAGES_CONFIG['login'])
