@@ -1,71 +1,59 @@
 import streamlit as st
-from scripts.api import login, register, url_base
+from pages import login, register, menu
 
+
+PAGES_CONFIG = {
+    'login': {
+        'title': 'Login', 
+        'icon': 'img/logo.ico'
+    },
+    'register': {
+        'title': 'Cadastro', 
+        'icon': 'img/logo.ico'
+    },
+    'menu': {
+        'title': 'Início', 
+        'icon': 'img/logo.ico'
+    },
+    'collection': {
+        'title': 'Catálogo', 
+        'icon': 'img/logo.ico'
+    },
+    'stats': {
+        'title': 'Estatísticas', 
+        'icon': 'img/logo.ico'
+    }
+}
+
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+if 'page' not in st.session_state:
+    st.session_state.page = 'login'
+
+current = PAGES_CONFIG.get(st.session_state.page, PAGES_CONFIG['login'])
 
 st.set_page_config(
-    page_title='',
+    page_title=current['title'],
+    page_icon=current['icon'],
     layout='wide',
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state='collapsed' 
 )
 
-if 'logado' not in st.session_state:
-    st.session_state.logado = False
-if 'token_acesso' not in st.session_state:
-    st.session_state.token_acesso = None
-if 'usuario' not in st.session_state:
-    st.session_state.usuario = None
-
-
-def show_login():
-    '''Renderiza os formulários de login e registro.'''
-    _, col2, _ = st.columns([.3, .4, .3])
-    with col2:
-        st.title('Books2Scrape')
-        tab1, tab2 = st.tabs(['Login', 'Cadastro'])
-        with tab1:
-            st.subheader('Entrar')
-            with st.form('form_login', clear_on_submit=False):
-                usuario = st.text_input('Usuário', key='input_usuario')
-                senha = st.text_input('Senha', type='password', key='input_senha')
-                entrar = st.form_submit_button('Entrar')
-                if entrar:
-                    token, erro = login(usuario, senha)
-                    if token:
-                        st.session_state.token_acesso = token
-                        st.session_state.usuario = usuario
-                        st.session_state.logado = True
-                        st.success(f'Login bem-sucedido. Bem-vindo(a), {usuario}!')
-                        st.rerun()
-                    else:
-                        st.error(erro)
-        with tab2:
-            st.subheader('Criar Conta')
-            with st.form('form_cadastro', clear_on_submit=True):
-                usuario = st.text_input('Novo Usuário', key='input_novo_usuario')
-                senha = st.text_input('Nova Senha', type='password', key='input_nova_senha')
-                cadastrar = st.form_submit_button('Cadastrar')
-                if cadastrar:
-                    sucesso, msg = register(usuario, senha)
-                    if sucesso:
-                        st.success(msg)
-                    else:
-                        st.error(msg)
-        st.markdown('---')
-        st.info(f'URL base da API: {url_base}')
-
-
-def show_logout_button():
-    '''Botão de sair no sidebar.'''
-    if st.button('Sair', key='logout_btn'):
-        st.session_state.logado = False
-        st.session_state.token_acesso = None
-        st.session_state.usuario = None
-        st.rerun()
-
-
-if st.session_state.logado:
-    st.markdown(f'Logado como: **{st.session_state.usuario}**')
-    show_logout_button()
-    st.title('Página inicial')
+if not st.session_state.logged_in:
+    if st.session_state.page == 'register':
+        register.show()
+    else:
+        login.show()
 else:
-    show_login()
+    # Roteador com nomes collection e stats
+    if st.session_state.page == 'menu':
+        menu.show()
+    elif st.session_state.page == 'collection':
+        from pages import collection
+        collection.show()
+    elif st.session_state.page == 'stats':
+        from pages import stats
+        stats.show()
+    else:
+        st.session_state.page = 'menu'
+        st.rerun()

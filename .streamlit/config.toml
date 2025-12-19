@@ -1,27 +1,25 @@
 [theme]
-
 #configuração tema de base da interface
 base = "dark"
-
 #configurações gerais
 textColor = "#e2e8f0"
 primaryColor = "#615fff"
 backgroundColor = "#1d293d"
 secondaryBackgroundColor = "#0f172b"
-
 #configuração de widgets
 showWidgetBorder = true
 borderColor = "#314158"
-
 #configuração de dataframes
-dataframeHeaderBackgroundColor = "#1d293d"
-
+dataframeHeaderBackgroundColor = "#0f172b"
 #configuração de fonte base
 font = "'Space Grotesk':https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"
 baseFontWeight = 300
 baseFontSize = 14
-
 #configuração de tamanho de fontes de cabeçalhos
 headingFont = "Space Grotesk"
 headingFontWeights = [300, 400, 400, 300, 300, 300]
-headingFontSizes = ["2.5rem", "1.5rem", "1rem"]
+headingFontSizes = ["2.5rem", "2rem", "1.5rem"]
+[client]
+showSidebarNavigation = false
+[server]
+runOnSave = true
