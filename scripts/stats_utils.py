@@ -1,7 +1,8 @@
 import logging
 import requests
-from typing import List, Dict, Any, Optional
-from . import URL_BASE
+from scripts import URL_BASE
+from typing import List, Dict, Optional, Any
+
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,6 @@ def get_stats_overview(token: str) -> Optional[Dict[str, Any]]:
             - avg_price (float): Média de preço de todos os livros.
             - total_books (int): Quantidade total de registros.
             - rating_distribution (list): Lista de dicts com 'rating' e 'count'.
-        Retorna None se a API falhar ou o status for diferente de 200.
     '''
     headers = {'Authorization': f'Bearer {token}'}
     try:
@@ -44,8 +44,6 @@ def get_stats_by_category(token: str) -> List[Dict[str, Any]]:
         Uma lista de dicionários, onde cada item contém:
             - category (str): Nome da categoria.
             - avg_price (float): Média de preço naquela categoria.
-            - total (int): Quantidade de livros pertencentes à categoria.
-        Retorna uma lista vazia [] em caso de erro.
     '''
     headers = {'Authorization': f'Bearer {token}'}
     try:

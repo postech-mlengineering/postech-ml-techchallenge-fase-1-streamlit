@@ -1,6 +1,6 @@
 import streamlit as st
 from pages import login, register, menu
-from scripts.auth_utils import get_cookies
+from scripts import get_cookies
 
 PAGES_CONFIG = {
     'login': {
@@ -22,11 +22,16 @@ PAGES_CONFIG = {
     'stats': {
         'title': 'Estatísticas', 
         'icon': 'img/logo.ico'
+    },
+    'preferences': {
+        'title': 'Preferences', 
+        'icon': 'img/logo.ico'
     }
 }
 
 st.session_state.token_acesso = get_cookies('token_acesso')
 st.session_state.page = get_cookies('page')
+st.session_state.user_id = get_cookies('user_id')
 st.session_state.username = get_cookies('username')
 st.session_state.logged_in = get_cookies('logged_in')
 
@@ -49,7 +54,6 @@ if not st.session_state.logged_in:
     else:
         login.show()
 else:
-    # Roteador com nomes collection e stats
     if st.session_state.page == 'menu':
         menu.show()
     elif st.session_state.page == 'collection':
@@ -58,6 +62,9 @@ else:
     elif st.session_state.page == 'stats':
         from pages import stats
         stats.show()
+    elif st.session_state.page == 'preferences':
+        from pages import preferences
+        preferences.show()
     else:
         st.session_state.page = 'menu'
         st.rerun()

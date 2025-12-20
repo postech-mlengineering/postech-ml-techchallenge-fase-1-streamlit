@@ -1,7 +1,7 @@
 import logging
 import requests
+from scripts import URL_BASE
 from typing import List, Dict, Optional, Union, Any
-from . import URL_BASE
 
 
 logger = logging.getLogger(__name__)
@@ -112,7 +112,7 @@ def get_books_by_price_range(
         return []
 
 
-def get_top_rated(token: str, limit: int = 10) -> List[Dict[str, Any]]:
+def get_top_rated(token: str, limit: int = 1000) -> List[Dict[str, Any]]:
     '''
     Retorna os livros com as melhores avaliações.
 

@@ -1,7 +1,7 @@
 import logging
 import requests
+from scripts import URL_BASE
 from typing import List, Dict
-from . import URL_BASE
 
 
 logger = logging.getLogger(__name__)
@@ -16,7 +16,6 @@ def get_all_categories(token: str) -> List[Dict[str, str]]:
 
     Returns:
         Uma lista de dicionários contendo as categorias. Ex: [{'category': 'Art'}].
-        Retorna uma lista vazia [] em caso de erro ou falha de autenticação.
     '''
     headers = {'Authorization': f'Bearer {token}'}
     try:
