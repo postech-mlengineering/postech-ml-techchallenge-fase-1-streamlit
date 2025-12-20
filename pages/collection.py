@@ -6,7 +6,7 @@ from scripts.books_utils import (
     get_books_by_price_range,
     get_top_rated
 )
-from scripts.categories_utils import get_all_categories
+from scripts.genres_utils import get_all_genres
 from scripts.ml_utils import get_user_preferences 
 from scripts import get_cookies, set_cookies
 
@@ -35,8 +35,8 @@ def show() -> None:
             if title_genre_filter:
                 st.sidebar.markdown('### Título ou Gênero') 
                 title = st.sidebar.text_input('Título', placeholder='Ex: The White Queen', key='input_title')
-                categories = get_all_categories(token)
-                options = ['Todas'] + [c['category'] for c in categories] if categories else ['Todas']
+                genres = get_all_genres(token)
+                options = ['Todas'] + [c['category'] for c in genres] if genres else ['Todas']
                 option = st.sidebar.selectbox('Gênero', options=options, key='input_genre')
             if title_genre_filter and price_range_filter:
                 st.sidebar.divider()
