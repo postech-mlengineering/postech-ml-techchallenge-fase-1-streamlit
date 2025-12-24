@@ -46,10 +46,12 @@ def show() -> None:
                 st.image('img/collection.png', width='stretch')
             with text_col:
                 st.write(
-                    'Navegue pelo catálogo completo, use filtros de preço e '
-                    'categoria, e veja recomendações baseadas no seu perfil.'
+                    '''
+                        Navegue pelo acervo completo, use filtros de preço e
+                        gênero e veja recomendações baseadas no seu perfil.
+                    '''
                 )
-            if st.button('Acessar Catálogo', width='stretch', key='btn_coll'):
+            if st.button('Acessar', width='stretch', key='btn_coll'):
                 set_cookies('page', 'collection')
                 st.rerun()
     with col2:
@@ -60,9 +62,11 @@ def show() -> None:
                 st.image('img/stats.png', width='stretch')
             with text_col:
                 st.write(
-                    'Visualize análises gráficas sobre preços, gêneros e '
-                    'distribuição de avaliações de todo o acervo.'
+                    '''
+                        Visualize análises sobre preços, gêneros e
+                        distribuição de avaliações de todo o acervo.
+                    '''
                 )
-            if st.button('Ver Estatísticas', width='stretch', key='btn_stats'):
+            if st.button('Acessar', width='stretch', key='btn_stats'):
                 set_cookies('page', 'stats')
                 st.rerun()
