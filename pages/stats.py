@@ -75,8 +75,8 @@ def show() -> None:
                 template='plotly_white',
                 labels={'avg_price': 'Preço Médio (£)', 'genre': 'Gênero'}
             )
-            fig_bar.update_layout(coloraxis_showscale=False, height=450, margin=dict(l=0, r=0, t=30, b=0))
-            st.plotly_chart(fig_bar, use_container_width=True)
+            fig_bar.update_layout(coloraxis_showscale=False, height=550, margin=dict(l=0, r=0, t=30, b=0))
+            st.plotly_chart(fig_bar, width='stretch')
         else:
             st.warning('Selecione ao menos um gênero.')
 
@@ -91,8 +91,8 @@ def show() -> None:
                 color_discrete_sequence=pallete,
                 template='plotly_white'
             )
-            fig_pie.update_layout(height=450, margin=dict(l=0, r=0, t=30, b=0))
-            st.plotly_chart(fig_pie, use_container_width=True)
+            fig_pie.update_layout(height=550, margin=dict(l=0, r=0, t=30, b=0))
+            st.plotly_chart(fig_pie, width='stretch')
         else:
             st.warning('Selecione ao menos uma avaliação.')
 
@@ -104,6 +104,6 @@ def show() -> None:
         st.dataframe(
             df_display.style.background_gradient(subset=['Preço (£)'], cmap='Blues')
             .format({'Preço (£)': '{:.2f}'}),
-            use_container_width=True,
+            width='stretch',
             hide_index=True
         )

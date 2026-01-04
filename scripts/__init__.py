@@ -7,10 +7,6 @@ from typing import Tuple, Optional, Any
 logger = logging.getLogger(__name__)
 
 
-controller = CookieController()
-URL_BASE = 'http://192.168.15.8:5000/api/v1'
-
-
 def remove_cookies() -> None:
     '''
     Remove todos os cookies de sessão relacionados à autenticação e navegação.
@@ -81,4 +77,4 @@ def set_cookies(key: str, value: Any) -> None:
 
 controller = CookieController()
 
-URL_BASE = 'http://192.168.15.8:5000/api/v1'
+URL_BASE = 'http://192.168.15.9:5000/api/v1'

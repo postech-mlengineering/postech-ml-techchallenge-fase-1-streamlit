@@ -41,7 +41,7 @@ def get_book_details(token: str, book_id: Union[int, str]) -> Optional[Dict[str,
     '''
     headers = {'Authorization': f'Bearer {token}'}
     try:
-        response = requests.get(f'{URL_BASE}/books/{book_id}', headers=headers, timeout=5)
+        response = requests.get(f'{URL_BASE}/books/details/{book_id}', headers=headers, timeout=5)
         if response.status_code == 200:
             return response.json()
         return None
